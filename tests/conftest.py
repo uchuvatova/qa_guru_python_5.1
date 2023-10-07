@@ -11,9 +11,8 @@ browser.config.driver = driver
 
 @pytest.fixture(scope='function', autouse=True)
 def browser_management():
-    browser.config.base_url = 'https://demoqa.com/automation-practice-form'
+    browser.config.base_url = 'https://demoqa.com'
     browser.config.timeout = 2.0
-    #driver.maximize_window()
     browser.config.window_width = 668
     browser.config.window_heigth = 536
 

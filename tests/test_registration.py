@@ -1,10 +1,10 @@
-import random
 from selene import browser, have, be
 from selene import command
+import os.path
 
 
 def test_success_registration_without_email():
-    browser.open('/')
+    browser.open('/automation-practice-form')
     # Ввод имени
     browser.element('#firstName').should(be.blank).type('Ira')
     # Проверка, что имя введено
@@ -18,7 +18,7 @@ def test_success_registration_without_email():
     # Выбор пола
     browser.element('label[for=gender-radio-2]').click()
     # Ввод телефона
-    browser.element('#userNumber').should(be.blank).type(random.randint(1000000000, 9999999999))
+    browser.element('#userNumber').should(be.blank).type('1234567890')
     # Вызов календаря в поле День рождения
     browser.element('#dateOfBirthInput').should(be.not_.blank).click()
     # Выбор года
@@ -31,14 +31,15 @@ def test_success_registration_without_email():
     browser.element('.react-datepicker__day--026').click()
     # Проверка, что в поле День рождения отображается выбранная дата
     browser.element('#dateOfBirthInput').should(have.attribute('value').value_containing('26 Apr 1986'))
-    # Ввод Subjects
-    browser.element('#subjectsInput').should(be.blank).type('Testing')
+    # Ввод и выбор Subjects
+    browser.element('#subjectsInput').should(be.blank).type('Maths')
+    browser.element('#react-select-2-option-0').click()
     # Проверка, что Subjects введены
-    browser.element('#subjectsInput').should(have.attribute('value').value_containing('Testing'))
+    browser.element('#subjectsContainer').should(have.text('Maths'))
     # Выбор хобби
     browser.element('label[for=hobbies-checkbox-2]').click()
     # Выбор картинки
-    browser.element('input[type="file"]').send_keys('C:/Users/iauchuvat1/QA_Guru/qa_guru_python_5/tests/1.png')
+    browser.element('input[type="file"]').send_keys(os.path.abspath('resourses/1.png'))
     # Ввод адреса
     browser.element('#currentAddress').should(be.blank).type('NN')
     # Проверка, что адрес введен
@@ -57,5 +58,7 @@ def test_success_registration_without_email():
     browser.element('#submit').click()
     # Проверка появления модального окна с подтверждением регистрации
     browser.element('.modal-content').element('.modal-header').should(have.text('Thanks for submitting the form'))
+    # Проверка соответствия таблицы введенным данным
+    browser.element('.table-responsive').all('td:nth-child(2)').should(have.texts('Ira Uchuvatova', '', 'Female', '1234567890', '26 April,1986', 'Maths', 'Reading', '1.png', 'NN', 'NCR Delhi'))
 
 
