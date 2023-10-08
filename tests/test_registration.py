@@ -3,7 +3,7 @@ from selene import command
 import os.path
 
 
-def test_success_registration_without_email():
+def test_success_registration():
     browser.open('/automation-practice-form')
     # Ввод имени
     browser.element('#firstName').should(be.blank).type('Ira')
