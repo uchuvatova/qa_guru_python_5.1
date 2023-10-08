@@ -15,7 +15,7 @@ def test_success_registration_without_email():
     browser.element('#lastName').should(have.attribute('value').value_containing('Uchuvatova'))
     # Ввод email
     browser.element('#userEmail').should(be.blank).type('example@mail.ru')
-    # Проверка, что фамилия введена
+    # Проверка, что email введен
     browser.element('#userEmail').should(have.attribute('value').value_containing('example@mail.ru'))
     # Скролл до чек-боксов с хобби
     browser.element('label[for=hobbies-checkbox-2]').perform(command.js.scroll_into_view)
